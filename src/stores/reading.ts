@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useReadingStore = defineStore('reading', {
@@ -20,7 +19,8 @@ export const useReadingStore = defineStore('reading', {
 
   actions: {
     togglePause() {
-      this.isPaused = !this.isPaused
+      this.playback.isPaused = !this.playback.isPaused
+      console.log('Pause state:', this.playback.isPaused)
     },
   },
 })

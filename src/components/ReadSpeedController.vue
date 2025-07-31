@@ -1,7 +1,7 @@
 <template>
   <div>
     <button>Back</button>
-    <button @click="pauseWordRotation">Pause</button>
+    <button @click="store.togglePause()">Pause</button>
     <button>Forward</button>
   </div>
 </template>
@@ -10,8 +10,4 @@
 import { useReadingStore } from '@/stores/reading'
 
 const store = useReadingStore()
-
-const onPauseClickeck = () => {
-  store.togglePause()
-}
 </script>

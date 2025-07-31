@@ -6,7 +6,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useReadingStore } from '@/stores/reading'
 
+const store = useReadingStore()
 const words = ref<string[]>(['A', 'set', 'of', 'words', 'for', 'an', 'example'])
 const currentIndex = ref(0)
 const currentWord = ref(words[currentIndex.value])
