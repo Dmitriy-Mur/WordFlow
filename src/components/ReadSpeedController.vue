@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button>Back</button>
+    <button @click="store.toggleBack()">Back</button>
     <button @click="store.togglePause()">Pause</button>
     <button>Forward</button>
   </div>

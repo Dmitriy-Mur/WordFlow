@@ -1,5 +1,5 @@
 <template>
-  <h1>Component: App.vue</h1>
+  <h1>Component App.vue</h1>
   <word-flow />
   <read-speed-controller />
 </template>
