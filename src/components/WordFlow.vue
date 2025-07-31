@@ -1,3 +1,9 @@
+<template>
+  <h1>Component WordFlow</h1>
+  <h3>words value: {{ words }}</h3>
+  <h3>currentWord: {{ currentWord }}</h3>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
@@ -17,13 +23,11 @@ const startWordRotation = () => {
   intervalId = setInterval(getNextWord, speed.value)
 }
 
+const pauseWordRotation = () => {
+  clearInterval(intervalId)
+}
+
 onMounted(() => {
   startWordRotation()
 })
 </script>
-
-<template>
-  <h1>Component WordFlow</h1>
-  <h3>words value: {{ words }}</h3>
-  <h3>currentWord: {{ currentWord }}</h3>
-</template>
