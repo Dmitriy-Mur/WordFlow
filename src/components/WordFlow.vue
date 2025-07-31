@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useReadingStore } from '@/stores/reading'
 
 const store = useReadingStore()
@@ -32,4 +32,13 @@ const pauseWordRotation = () => {
 onMounted(() => {
   startWordRotation()
 })
+
+watch(
+  () => store.playback.isPaused,
+  (paused) => {
+    console.log('Pause state changed:', paused)
+    if (paused) pauseWordRotation()
+    else startWordRotation()
+  },
+)
 </script>
