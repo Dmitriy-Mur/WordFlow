@@ -1,7 +1,9 @@
 <template>
   <div>
     <button @click="store.toggleBack()">Back</button>
-    <button @click="store.togglePause()">Pause</button>
+    <button @click="store.togglePause()">
+      {{ store.playback.isPaused ? '▶️' : '⏸' }}
+    </button>
     <button>Forward</button>
   </div>
 </template>
