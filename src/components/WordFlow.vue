@@ -1,9 +1,11 @@
 <template>
+  <!--
   <h1>Component WordFlow</h1>
-  <h3>words value: {{ store.content.words }}</h3>
-  <h3>currentIndex: {{ store.playback.currentWordIndex }}</h3>
-  <h3>currentWord: {{ store.currentWord }}</h3>
-  <h3>progress: {{ store.progress }}%</h3>
+  <h4>words value: {{ store.content.words }}</h4>
+  <h4>currentIndex: {{ store.playback.currentWordIndex }}</h4>
+  -->
+  <h1>{{ store.currentWord }}</h1>
+  <h4>progress: {{ store.progress }}%</h4>
 </template>
 
 <script setup lang="ts">

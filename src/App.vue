@@ -1,6 +1,7 @@
 <template>
   <h1>WordFlow</h1>
-  <p>RSVP reader for focus & speed</p>
+  <h4>RSVP reader for focus & speed</h4>
+  <text-input />
   <word-flow />
   <read-speed-controller />
   <speed-controller />
@@ -10,6 +11,9 @@
 import WordFlow from './components/WordFlow.vue'
 import ReadSpeedController from './components/TextNavigation.vue'
 import SpeedController from './components/SpeedController.vue'
+import TextInput from './components/TextInput.vue'
 </script>
 
-<style scoped></style>
+<style scoiped lang="scss">
+@use './styles/main.scss';
+</style>

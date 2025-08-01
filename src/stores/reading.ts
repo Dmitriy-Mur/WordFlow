@@ -80,5 +80,9 @@ export const useReadingStore = defineStore('reading', {
       this.stopWordRotation()
       this.startWordRotation()
     },
+    updateSpeed() {
+      this.stopWordRotation()
+      this.startWordRotation()
+    },
   },
 })
