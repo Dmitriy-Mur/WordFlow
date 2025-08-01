@@ -1,10 +1,10 @@
 <template>
   <div>
-    <button @click="store.toggleBack()">Back</button>
+    <button @click="store.toggleBack()">⏪</button>
     <button @click="store.togglePause()">
-      {{ store.playback.isPaused ? '▶️' : '⏸' }}
+      {{ store.playback.isPaused ? '▶️' : '⏸️' }}
     </button>
-    <button>Forward</button>
+    <button @click="store.toggleForward()">⏩</button>
   </div>
 </template>
 

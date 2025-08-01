@@ -3,7 +3,7 @@
   <h3>words value: {{ store.content.words }}</h3>
   <h3>currentIndex: {{ store.playback.currentWordIndex }}</h3>
   <h3>currentWord: {{ store.currentWord }}</h3>
-  <h3>progress: {{ store.progress }}</h3>
+  <h3>progress: {{ store.progress }}%</h3>
 </template>
 
 <script setup lang="ts">

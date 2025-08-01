@@ -21,7 +21,8 @@ export const useReadingStore = defineStore('reading', {
 
   getters: {
     currentWord: (state) => state.content.words[state.playback.currentWordIndex],
-    progress: (state) => (state.playback.currentWordIndex / state.content.words.length) * 100,
+    progress: (state) =>
+      Math.round((state.playback.currentWordIndex / state.content.words.length) * 100),
   },
 
   actions: {
@@ -53,15 +54,17 @@ export const useReadingStore = defineStore('reading', {
       }
     },
     setCurrentWord() {
-      if (this.content.currentWordIndex === 0) {
-        return
-      }
       this.playback.currentWordIndex =
         (this.playback.currentWordIndex + 1) % this.content.words.length
     },
     toggleBack() {
-      if (this.playback.currentIndex > 0) {
-        this.playback.currentIndex--
+      if (this.playback.currentWordIndex > 0) {
+        this.playback.currentWordIndex--
+      }
+    },
+    toggleForward() {
+      if (this.playback.currentWordIndex < this.content.words.length - 1) {
+        this.playback.currentWordIndex++
       }
     },
   },
