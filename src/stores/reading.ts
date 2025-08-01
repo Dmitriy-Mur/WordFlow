@@ -67,5 +67,18 @@ export const useReadingStore = defineStore('reading', {
         this.playback.currentWordIndex++
       }
     },
+    plusSpeed() {
+      this.playback.speed = this.playback.speed + 100
+      this.stopWordRotation()
+      this.startWordRotation()
+    },
+    minusSpeed() {
+      if (this.playback.speed <= 100) {
+        return
+      }
+      this.playback.speed = this.playback.speed - 100
+      this.stopWordRotation()
+      this.startWordRotation()
+    },
   },
 })
