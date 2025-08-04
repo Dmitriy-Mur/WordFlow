@@ -3,8 +3,10 @@
   <h4>RSVP reader for focus & speed</h4>
   <text-input />
   <word-flow />
+  <!--
   <read-speed-controller />
   <speed-controller />
+  -->
 </template>
 
 <script setup lang="ts">
