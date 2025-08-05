@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { useReadingStore } from '@/stores/reading'
-import { storeToRefs } from 'pinia'
 
 const store = useReadingStore()
+const { navigate } = store
 </script>
