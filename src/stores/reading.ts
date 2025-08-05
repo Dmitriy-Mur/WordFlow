@@ -93,6 +93,10 @@ export const useReadingStore = defineStore('reading', () => {
           }
         }
       },
+      udpate: () => {
+        stopWordRotation()
+        startWordRotation()
+      },
     },
   }
 })

@@ -5,7 +5,7 @@
     <input
       type="number"
       v-model.number="store.playback.speed"
-      @change="adjustSpeed.updateSpeed()"
+      @change="adjustSpeed.udpate()"
       min="50"
       max="1000"
       step="50"
