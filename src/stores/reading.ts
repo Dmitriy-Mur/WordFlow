@@ -55,6 +55,7 @@ export const useReadingStore = defineStore('reading', () => {
       content.sourceText.value = text
       content.words.value = content.sourceText.value.split(/\s+/)
       playback.currentWordIndex.value = 0
+      console.log('words', content.words.value)
     },
 
     togglePause: () => {
