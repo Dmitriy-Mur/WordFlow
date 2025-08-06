@@ -2,7 +2,7 @@
   <textarea
     v-model="inputText"
     placeholder="Input or paste your text"
-    rows="10"
+    rows="5"
     cols="50"
     @input="handleInput"
   ></textarea>

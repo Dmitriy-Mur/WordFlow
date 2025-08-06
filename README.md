@@ -3,6 +3,8 @@
 **Speed-read any text without moving your eyes.**  
 A minimalist RSVP (Rapid Serial Visual Presentation) reader built with Vue 3, TypeScript, and Pinia.
 
+![Screenshot](image.png)
+
 ## Features
 
 - 📌 **Focus mode** – Words appear one at a time in a fixed spot.

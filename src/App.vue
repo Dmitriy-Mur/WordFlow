@@ -1,10 +1,12 @@
 <template>
   <h1>WordFlow</h1>
   <h4>RSVP reader for focus & speed</h4>
-  <text-input />
-  <word-flow />
-  <text-navigation />
-  <speed-controller />
+  <div id="app">
+    <text-input />
+    <word-flow />
+    <text-navigation />
+    <speed-controller />
+  </div>
 </template>
 
 <script setup lang="ts">

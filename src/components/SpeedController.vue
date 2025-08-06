@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Word per second: {{ store.playback.speed }}</h4>
+    <h4>Word per second</h4>
     <button @click="adjustSpeed.increase()">+</button>
     <input
       type="number"
