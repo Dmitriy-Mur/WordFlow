@@ -29,7 +29,7 @@ export const useReadingStore = defineStore('reading', () => {
     stopWordRotation()
     playback.intervalId.value = window.setInterval(() => {
       setCurrentWord()
-    }, playback.speed.value)
+    }, convertWPSToTimeout(playback.speed.value))
   }
 
   const stopWordRotation = () => {
@@ -43,6 +43,11 @@ export const useReadingStore = defineStore('reading', () => {
     playback.currentWordIndex.value =
       (playback.currentWordIndex.value + 1) % content.words.value.length
   }
+
+  const convertWPSToTimeout = (wps: number) => {
+    return (60 / wps) * 1000
+  }
+
   return {
     playback,
     display,
@@ -50,6 +55,9 @@ export const useReadingStore = defineStore('reading', () => {
 
     currentWord,
     progress,
+
+    startWordRotation,
+    stopWordRotation,
 
     loadText: (text: string) => {
       content.sourceText.value = text
@@ -78,15 +86,15 @@ export const useReadingStore = defineStore('reading', () => {
 
     adjustSpeed: {
       increase: () => {
-        playback.speed.value += 100
+        playback.speed.value += 5
         if (!playback.isPaused.value) {
           stopWordRotation()
           startWordRotation()
         }
       },
       decrease: () => {
-        if (playback.speed.value > 100) {
-          playback.speed.value -= 100
+        if (playback.speed.value > 5) {
+          playback.speed.value -= 5
           if (!playback.isPaused.value) {
             stopWordRotation()
             startWordRotation()

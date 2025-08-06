@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h4>Current speed: {{ store.playback.speed }}</h4>
+    <h4>Word per second: {{ store.playback.speed }}</h4>
     <button @click="adjustSpeed.increase()">+</button>
     <input
       type="number"
       v-model.number="store.playback.speed"
       @change="adjustSpeed.udpate()"
-      min="50"
-      max="1000"
-      step="50"
+      min="10"
+      max="300"
+      step="1"
     />
     <button @click="adjustSpeed.decrease()">-</button>
   </div>

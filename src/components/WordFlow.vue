@@ -9,14 +9,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useReadingStore } from '@/stores/reading'
-import { storeToRefs } from 'pinia'
 
 const store = useReadingStore()
-const { currentWord, progress, playback, content } = storeToRefs(store)
 
 onMounted(() => {
   store.loadText('New example of text for testing this application')
-  console.log('WordFlow: words = ', store.content.value.words)
+  console.log('WordFlow: words = ', store.content.words.values)
   store.startWordRotation()
 })
 </script>
