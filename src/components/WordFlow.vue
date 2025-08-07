@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ store.currentWord }}</h1>
+  <h1>{{ store.currentChunk }}</h1>
   <h4>progress: {{ store.progress }}%</h4>
 </template>
 

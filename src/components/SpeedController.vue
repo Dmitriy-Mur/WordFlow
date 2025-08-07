@@ -4,7 +4,7 @@
     <button @click="adjustSpeed.increase()">+</button>
     <input
       type="number"
-      v-model.number="store.playback.speed"
+      v-model.number="store.playback.WordPerSecond"
       @change="adjustSpeed.udpate()"
       min="10"
       max="300"

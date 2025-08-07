@@ -6,14 +6,16 @@
     <word-flow />
     <text-navigation />
     <speed-controller />
+    <chunk-controller />
   </div>
 </template>
 
 <script setup lang="ts">
 import TextInput from './components/TextInput.vue'
 import WordFlow from './components/WordFlow.vue'
-import TextNavigation from './components/TextNavigation.vue'
+import TextNavigation from './components/NavigationController.vue'
 import SpeedController from './components/SpeedController.vue'
+import ChunkController from './components/ChunkController.vue'
 </script>
 
 <style scoped lang="scss">

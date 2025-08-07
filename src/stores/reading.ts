@@ -4,8 +4,9 @@ import { computed, ref } from 'vue'
 export const useReadingStore = defineStore('reading', () => {
   const playback = {
     isPaused: ref(false),
-    speed: ref(100),
-    currentWordIndex: ref(0),
+    WordPerSecond: ref(100),
+    currentChunkIndex: ref(0),
+    chunkSize: ref(3),
     intervalId: ref<number | null>(null),
   }
 
@@ -16,20 +17,19 @@ export const useReadingStore = defineStore('reading', () => {
   }
 
   const content = {
-    words: ref([] as string[]),
+    chunks: ref([] as string[]),
     sourceText: ref(''),
   }
-
-  const currentWord = computed(() => content.words.value[playback.currentWordIndex.value])
+  const currentChunk = computed(() => content.chunks.value[playback.currentChunkIndex.value])
   const progress = computed(() =>
-    Math.round((playback.currentWordIndex.value / content.words.value.length) * 100),
+    Math.round((playback.currentChunkIndex.value / content.chunks.value.length) * 100),
   )
 
   const startWordRotation = () => {
     stopWordRotation()
     playback.intervalId.value = window.setInterval(() => {
-      setCurrentWord()
-    }, convertWPSToTimeout(playback.speed.value))
+      setCurrentChunk()
+    }, convertWPSToTimeout(playback.WordPerSecond.value))
   }
 
   const stopWordRotation = () => {
@@ -39,13 +39,22 @@ export const useReadingStore = defineStore('reading', () => {
     }
   }
 
-  const setCurrentWord = () => {
-    playback.currentWordIndex.value =
-      (playback.currentWordIndex.value + 1) % content.words.value.length
+  const setCurrentChunk = () => {
+    playback.currentChunkIndex.value =
+      (playback.currentChunkIndex.value + 1) % content.chunks.value.length
   }
 
   const convertWPSToTimeout = (wps: number) => {
-    return (60 / wps) * 1000
+    return (60 / wps) * playback.chunkSize.value * 1000
+  }
+
+  const splitToChunks = (words: string[], chunkSize: number) => {
+    const result: string[] = []
+    for (let i = 0; i < words.length; i += chunkSize) {
+      const group = words.slice(i, i + chunkSize).join(' ')
+      result.push(group)
+    }
+    return result
   }
 
   return {
@@ -53,7 +62,7 @@ export const useReadingStore = defineStore('reading', () => {
     display,
     content,
 
-    currentWord,
+    currentChunk,
     progress,
 
     startWordRotation,
@@ -61,9 +70,10 @@ export const useReadingStore = defineStore('reading', () => {
 
     loadText: (text: string) => {
       content.sourceText.value = text
-      content.words.value = content.sourceText.value.split(/\s+/)
-      playback.currentWordIndex.value = 0
-      console.log('words', content.words.value)
+      content.chunks.value = content.sourceText.value.split(/\s+/)
+      content.chunks.value = splitToChunks(content.chunks.value, playback.chunkSize.value)
+      playback.currentChunkIndex.value = 0
+      console.log(content.chunks.value)
     },
 
     togglePause: () => {
@@ -73,28 +83,28 @@ export const useReadingStore = defineStore('reading', () => {
 
     navigate: {
       back: () => {
-        if (playback.currentWordIndex.value > 0) {
-          playback.currentWordIndex.value--
+        if (playback.currentChunkIndex.value > 0) {
+          playback.currentChunkIndex.value--
         }
       },
       forward: () => {
-        if (playback.currentWordIndex.value < content.words.value.length - 1) {
-          playback.currentWordIndex.value++
+        if (playback.currentChunkIndex.value < content.chunks.value.length - 1) {
+          playback.currentChunkIndex.value++
         }
       },
     },
 
     adjustSpeed: {
       increase: () => {
-        playback.speed.value += 5
+        playback.WordPerSecond.value += 5
         if (!playback.isPaused.value) {
           stopWordRotation()
           startWordRotation()
         }
       },
       decrease: () => {
-        if (playback.speed.value > 5) {
-          playback.speed.value -= 5
+        if (playback.WordPerSecond.value > 5) {
+          playback.WordPerSecond.value -= 5
           if (!playback.isPaused.value) {
             stopWordRotation()
             startWordRotation()
