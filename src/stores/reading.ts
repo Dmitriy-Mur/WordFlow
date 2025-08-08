@@ -5,7 +5,7 @@ export const useReadingStore = defineStore('reading', () => {
   const playback = {
     isPaused: ref(false),
     WordPerSecond: ref(100),
-    currentChunkIndex: ref(0),
+    currentWordIndex: ref(0),
     chunkSize: ref(3),
     intervalId: ref<number | null>(null),
   }
@@ -17,18 +17,28 @@ export const useReadingStore = defineStore('reading', () => {
   }
 
   const content = {
-    chunks: ref([] as string[]),
+    words: ref([] as string[]),
     sourceText: ref(''),
   }
-  const currentChunk = computed(() => content.chunks.value[playback.currentChunkIndex.value])
+
+  const currentChunk = computed(() => {
+    const start = playback.currentWordIndex.value
+    const end = Math.min(start + playback.chunkSize.value, content.words.value.length)
+    return content.words.value.slice(start, end).join(' ')
+  })
+
   const progress = computed(() =>
-    Math.round((playback.currentChunkIndex.value / content.chunks.value.length) * 100),
+    Math.round((playback.currentWordIndex.value / content.words.value.length) * 100),
   )
+
+  const convertWPSToTimeout = (wps: number) => {
+    return (60 / wps) * playback.chunkSize.value * 1000
+  }
 
   const startWordRotation = () => {
     stopWordRotation()
     playback.intervalId.value = window.setInterval(() => {
-      setCurrentChunk()
+      setNextChunk()
     }, convertWPSToTimeout(playback.WordPerSecond.value))
   }
 
@@ -39,22 +49,9 @@ export const useReadingStore = defineStore('reading', () => {
     }
   }
 
-  const setCurrentChunk = () => {
-    playback.currentChunkIndex.value =
-      (playback.currentChunkIndex.value + 1) % content.chunks.value.length
-  }
-
-  const convertWPSToTimeout = (wps: number) => {
-    return (60 / wps) * playback.chunkSize.value * 1000
-  }
-
-  const splitToChunks = (words: string[], chunkSize: number) => {
-    const result: string[] = []
-    for (let i = 0; i < words.length; i += chunkSize) {
-      const group = words.slice(i, i + chunkSize).join(' ')
-      result.push(group)
-    }
-    return result
+  const setNextChunk = () => {
+    playback.currentWordIndex.value =
+      (playback.currentWordIndex.value + playback.chunkSize.value) % content.words.value.length
   }
 
   return {
@@ -70,10 +67,19 @@ export const useReadingStore = defineStore('reading', () => {
 
     loadText: (text: string) => {
       content.sourceText.value = text
-      content.chunks.value = content.sourceText.value.split(/\s+/)
-      content.chunks.value = splitToChunks(content.chunks.value, playback.chunkSize.value)
-      playback.currentChunkIndex.value = 0
-      console.log(content.chunks.value)
+      content.words.value = content.sourceText.value.split(/\s+/)
+      playback.currentWordIndex.value = 0
+    },
+
+    updateChunkSize: (newChunkSize: number) => {
+      if (newChunkSize === playback.chunkSize.value) return
+
+      playback.chunkSize.value = newChunkSize
+
+      if (playback.intervalId.value && !playback.isPaused.value) {
+        stopWordRotation()
+        startWordRotation()
+      }
     },
 
     togglePause: () => {
@@ -83,14 +89,15 @@ export const useReadingStore = defineStore('reading', () => {
 
     navigate: {
       back: () => {
-        if (playback.currentChunkIndex.value > 0) {
-          playback.currentChunkIndex.value--
-        }
+        const newIndex = Math.max(0, playback.currentWordIndex.value - playback.chunkSize.value)
+        playback.currentWordIndex.value = newIndex
       },
       forward: () => {
-        if (playback.currentChunkIndex.value < content.chunks.value.length - 1) {
-          playback.currentChunkIndex.value++
-        }
+        const newIndex = Math.min(
+          content.words.value.length - 1,
+          playback.currentWordIndex.value + playback.chunkSize.value,
+        )
+        playback.currentWordIndex.value = newIndex
       },
     },
 
@@ -111,7 +118,7 @@ export const useReadingStore = defineStore('reading', () => {
           }
         }
       },
-      udpate: () => {
+      update: () => {
         stopWordRotation()
         startWordRotation()
       },

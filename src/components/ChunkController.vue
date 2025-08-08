@@ -4,7 +4,7 @@
     <input
       type="number"
       v-model.number="store.playback.chunkSize"
-      @change="setChunkSize()"
+      @change="updateChunkSize(store.playback.chunkSize)"
       min="1"
       max="20"
       step="1"
@@ -16,5 +16,5 @@
 import { useReadingStore } from '@/stores/reading'
 
 const store = useReadingStore()
-const { setChunkSize } = store
+const { updateChunkSize } = store
 </script>
