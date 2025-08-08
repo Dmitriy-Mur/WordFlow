@@ -1,7 +1,6 @@
 <template>
   <h1>WordFlow</h1>
   <h4>RSVP reader for focus & speed</h4>
-  <h4>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</h4>
   <div id="app">
     <text-input />
     <word-flow />
