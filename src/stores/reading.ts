@@ -6,8 +6,8 @@ export const useReadingStore = defineStore('reading', () => {
     isPaused: ref(false),
     WordPerSecond: ref(100),
     currentWordIndex: ref(0),
-    currentChunkSize: ref(3), // Текущий размер чанка
-    nextChunkSize: ref(3), // Размер для следующих чанков
+    currentChunkSize: ref(3),
+    nextChunkSize: ref(3),
     intervalId: ref<number | null>(null),
   }
 
@@ -22,14 +22,12 @@ export const useReadingStore = defineStore('reading', () => {
     sourceText: ref(''),
   }
 
-  // Текущий чанк формируется с currentChunkSize
   const currentChunk = computed(() => {
     const start = playback.currentWordIndex.value
     const end = Math.min(start + playback.currentChunkSize.value, content.words.value.length)
     return content.words.value.slice(start, end).join(' ')
   })
 
-  // Следующий чанк будет формироваться с nextChunkSize
   const nextChunk = computed(() => {
     const nextStart = playback.currentWordIndex.value + playback.currentChunkSize.value
     const nextEnd = Math.min(nextStart + playback.nextChunkSize.value, content.words.value.length)
@@ -59,11 +57,9 @@ export const useReadingStore = defineStore('reading', () => {
   }
 
   const moveToNextChunk = () => {
-    // При переходе применяем nextChunkSize как новый currentChunkSize
     playback.currentWordIndex.value += playback.currentChunkSize.value
     playback.currentChunkSize.value = playback.nextChunkSize.value
 
-    // Проверяем выход за границы текста
     if (playback.currentWordIndex.value >= content.words.value.length) {
       playback.currentWordIndex.value = 0
     }
@@ -87,13 +83,8 @@ export const useReadingStore = defineStore('reading', () => {
       playback.currentWordIndex.value = 0
       playback.currentChunkSize.value = playback.nextChunkSize.value
     },
-
-    // Устанавливаем размер только для следующих чанков
     updateChunkSize: (newChunkSize: number) => {
       playback.nextChunkSize.value = newChunkSize
-
-      // Если воспроизведение активно, интервал перезапускать не нужно,
-      // так как текущий чанк не меняется
     },
 
     togglePause: () => {
@@ -103,7 +94,6 @@ export const useReadingStore = defineStore('reading', () => {
 
     navigate: {
       back: () => {
-        // Возвращаемся к началу текущего чанка
         const chunkStart = Math.max(
           0,
           playback.currentWordIndex.value - playback.currentChunkSize.value,
@@ -111,12 +101,10 @@ export const useReadingStore = defineStore('reading', () => {
         playback.currentWordIndex.value = chunkStart
       },
       forward: () => {
-        // Переходим к следующему чанку (с текущим размером)
         playback.currentWordIndex.value = Math.min(
           content.words.value.length - 1,
           playback.currentWordIndex.value + playback.currentChunkSize.value,
         )
-        // При навигации вручную тоже применяем новый размер
         playback.currentChunkSize.value = playback.nextChunkSize.value
       },
     },

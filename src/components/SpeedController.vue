@@ -7,7 +7,7 @@
       v-model.number="store.playback.WordPerSecond"
       @change="adjustSpeed.udpate()"
       min="10"
-      max="300"
+      max="500"
       step="1"
     />
     <button @click="adjustSpeed.decrease()">-</button>

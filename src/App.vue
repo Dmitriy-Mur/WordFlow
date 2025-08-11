@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+import FileUpload from './components/FileUpload.vue'
 import TextInput from './components/TextInput.vue'
 import WordFlow from './components/WordFlow.vue'
 import TextNavigation from './components/NavigationController.vue'

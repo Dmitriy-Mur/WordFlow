@@ -3,8 +3,8 @@
     <h4>Chunk size</h4>
     <input
       type="number"
-      v-model.number="store.playback.chunkSize"
-      @change="updateChunkSize(store.playback.chunkSize)"
+      v-model.number="store.playback.nextChunkSize"
+      @change="updateChunkSize(store.playback.nextChunkSize)"
       min="1"
       max="20"
       step="1"
