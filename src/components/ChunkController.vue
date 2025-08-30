@@ -3,8 +3,8 @@
     <h4>Chunk size</h4>
     <input
       type="number"
-      v-model.number="store.playback.nextChunkSize"
-      @change="updateChunkSize(store.playback.nextChunkSize)"
+      v-model.number="readingState.nextChunkSize"
+      @change="updateChunkSize(readingState.nextChunkSize)"
       min="1"
       max="20"
       step="1"
@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { useReadingStore } from '@/stores/reading'
+import { useReadingStateStore } from '@/stores/readingState'
 
-const store = useReadingStore()
-const { updateChunkSize } = store
+const readingState = useReadingStateStore()
+const updateChunkSize = (size: number) => readingState.setNextChunkSize(size)
 </script>

@@ -1,16 +1,24 @@
 <template>
-  <h1>{{ store.currentChunk }}</h1>
-  <h4>progress: {{ store.progress }}%</h4>
+  <h1>{{ currentChunk }}</h1>
+  <h4>progress: {{ progress }}%</h4>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useReadingStore } from '@/stores/reading'
+import { onMounted, computed } from 'vue'
+import { useTextContentStore } from '@/stores/textContent'
+import { useReadingStateStore } from '@/stores/readingState'
+import { usePlaybackControlStore } from '@/stores/playbackControl'
 
-const store = useReadingStore()
+const textContent = useTextContentStore()
+const readingState = useReadingStateStore()
+const playback = usePlaybackControlStore()
+
+const currentChunk = computed(() =>
+  textContent.getCurrentChunk(readingState.currentWordIndex, readingState.currentChunkSize),
+)
+const progress = computed(() => readingState.progress)
 
 onMounted(() => {
-  //store.loadText('1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20')
-  store.startWordRotation()
+  playback.startReading()
 })
 </script>

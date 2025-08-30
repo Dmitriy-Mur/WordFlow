@@ -1,16 +1,28 @@
 <template>
   <div>
     <button @click="navigate.back()">⏮</button>
-    <button @click="store.togglePause()">
-      {{ store.playback.isPaused ? '▶' : '⏸' }}
+    <button @click="togglePause()">
+      {{ isPaused ? '▶' : '⏸' }}
     </button>
     <button @click="navigate.forward()">⏭</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useReadingStore } from '@/stores/reading'
+import { computed } from 'vue'
+import { useTextNavigationStore } from '@/stores/textNavigation'
+import { usePlaybackControlStore } from '@/stores/playbackControl'
+import { useReadingStateStore } from '@/stores/readingState'
 
-const store = useReadingStore()
-const { navigate } = store
+const navigateStore = useTextNavigationStore()
+const playback = usePlaybackControlStore()
+const readingState = useReadingStateStore()
+
+const isPaused = computed(() => readingState.isPaused)
+const togglePause = () => playback.togglePause()
+
+const navigate = {
+  back: () => navigateStore.goToPreviousChunk(),
+  forward: () => navigateStore.goToNextChunk(),
+}
 </script>

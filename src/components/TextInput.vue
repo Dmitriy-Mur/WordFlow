@@ -10,12 +10,20 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useReadingStore } from '@/stores/reading'
+import { useTextContentStore } from '@/stores/textContent'
+import { usePlaybackControlStore } from '@/stores/playbackControl'
+import { useReadingStateStore } from '@/stores/readingState'
 
-const store = useReadingStore()
 const inputText = ref('')
-const { loadText } = store
+const content = useTextContentStore()
+const playback = usePlaybackControlStore()
+const readingState = useReadingStateStore()
+
 const handleInput = () => {
-  loadText(inputText.value)
+  const result = content.loadText(inputText.value)
+  if (result?.shouldReset) {
+    readingState.resetForNewText()
+  }
+  playback.restartPlayback()
 }
 </script>
