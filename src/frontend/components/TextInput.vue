@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useTextContentStore } from '@/stores/textContent'
-import { usePlaybackControlStore } from '@/stores/playbackControl'
-import { useReadingStateStore } from '@/stores/readingState'
+import { useTextContentStore } from '@/frontend/stores/textContent'
+import { usePlaybackControlStore } from '@/frontend/stores/playbackControl'
+import { useReadingStateStore } from '@/frontend/stores/readingState'
 
 const inputText = ref('')
 const content = useTextContentStore()

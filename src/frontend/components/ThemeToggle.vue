@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { useDisplaySettingsStore } from '@/stores/displaySettings'
+import { useDisplaySettingsStore } from '@/frontend/stores/displaySettings'
 
 const display = useDisplaySettingsStore()
 const toggleTheme = () => display.toggleTheme()

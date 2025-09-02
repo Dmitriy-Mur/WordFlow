@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useReadingStateStore } from '@/stores/readingState'
-import { useSpeedControlStore } from '@/stores/speedControl'
+import { useReadingStateStore } from '@/frontend/stores/readingState'
+import { useSpeedControlStore } from '@/frontend/stores/speedControl'
 
 const readingState = useReadingStateStore()
 const speed = useSpeedControlStore()

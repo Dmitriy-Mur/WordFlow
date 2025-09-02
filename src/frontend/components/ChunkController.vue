@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useReadingStateStore } from '@/stores/readingState'
+import { useReadingStateStore } from '@/frontend/stores/readingState'
 
 const readingState = useReadingStateStore()
 const updateChunkSize = (size: number) => readingState.setNextChunkSize(size)

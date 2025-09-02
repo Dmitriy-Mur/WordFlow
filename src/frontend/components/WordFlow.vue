@@ -5,9 +5,9 @@
 
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
-import { useTextContentStore } from '@/stores/textContent'
-import { useReadingStateStore } from '@/stores/readingState'
-import { usePlaybackControlStore } from '@/stores/playbackControl'
+import { useTextContentStore } from '@/frontend/stores/textContent'
+import { useReadingStateStore } from '@/frontend/stores/readingState'
+import { usePlaybackControlStore } from '@/frontend/stores/playbackControl'
 
 const textContent = useTextContentStore()
 const readingState = useReadingStateStore()

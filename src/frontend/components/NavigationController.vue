@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useTextNavigationStore } from '@/stores/textNavigation'
-import { usePlaybackControlStore } from '@/stores/playbackControl'
-import { useReadingStateStore } from '@/stores/readingState'
+import { useTextNavigationStore } from '@/frontend/stores/textNavigation'
+import { usePlaybackControlStore } from '@/frontend/stores/playbackControl'
+import { useReadingStateStore } from '@/frontend/stores/readingState'
 
 const navigateStore = useTextNavigationStore()
 const playback = usePlaybackControlStore()
