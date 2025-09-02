@@ -19,21 +19,17 @@ const server: FastifyInstance = fastify({
 
 async function startServer(): Promise<void> {
   try {
-    // Регистрируем CORS
     await server.register(cors, {
       origin: true,
       methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type'],
     })
 
-    // Регистрируем плагины
     await server.register(multipartPlugin)
 
-    // Регистрируем роуты
     await server.register(uploadRoutes)
     await server.register(fileRoutes)
 
-    // Запускаем сервер
     const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000
     const HOST = process.env.HOST || '0.0.0.0'
 
@@ -46,7 +42,6 @@ async function startServer(): Promise<void> {
   }
 }
 
-// Обработка graceful shutdown
 ;['SIGINT', 'SIGTERM'].forEach((signal) => {
   process.on(signal, async () => {
     server.log.info(`Получен сигнал ${signal}, останавливаем сервер...`)
