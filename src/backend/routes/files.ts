@@ -1,144 +1,141 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import fs from 'fs/promises';
-import path from 'path';
-import pdf from 'pdf-parse';
-import { FileUtils } from '../utils/fileUtils.js';
-import { FileContentResponse, FilesListResponse, DeleteResponse } from '../types/index.js';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
+import fs from 'fs/promises'
+import pdf from 'pdf-parse'
+import { FileUtils } from '../utils/fileUtils'
+import { FileContentResponse, FilesListResponse, DeleteResponse } from '../index'
 
 interface FileParams {
-  filename: string;
+  filename: string
 }
 
 export async function fileRoutes(fastify: FastifyInstance) {
-  fastify.get('/api/files', async (request: FastifyRequest, reply: FastifyReply): Promise<FilesListResponse> => {
-    try {
-      const uploadDir = path.join(__dirname, '..', '..', 'uploads');
-      
+  fastify.get(
+    '/api/files',
+    async (_request: FastifyRequest, reply: FastifyReply): Promise<FilesListResponse> => {
       try {
-        await fs.access(uploadDir);
-      } catch {
-        return { success: true, files: [] };
-      }
-
-      const files = await fs.readdir(uploadDir);
-      const filteredFiles = files.filter(file => 
-        file.match(/\.(pdf|md|markdown)$/i)
-      );
-
-      return {
-        success: true,
-        files: filteredFiles
-      };
-
-    } catch (error) {
-      fastify.log.error(error);
-      reply.code(500);
-      return {
-        success: false,
-        error: 'Ошибка при получении списка файлов'
-      };
-    }
-  });
-
-  fastify.get('/api/file/:filename', async (request: FastifyRequest<{ Params: FileParams }>, reply: FastifyReply): Promise<FileContentResponse> => {
-    try {
-      const { filename } = request.params;
-      
-      if (!FileUtils.isValidFilename(filename)) {
-        reply.code(400);
-        return {
-          success: false,
-          error: 'Некорректное имя файла'
-        };
-      }
-
-      const filePath = FileUtils.getUploadPath(filename);
-
-      try {
-        await fs.access(filePath);
-      } catch {
-        reply.code(404);
-        return {
-          success: false,
-          error: 'Файл не найден'
-        };
-      }
-
-      if (filename.endsWith('.pdf')) {
-        const dataBuffer = await fs.readFile(filePath);
-        const data = await pdf(dataBuffer);
-        
+        const files = await FileUtils.listUploadFiles()
         return {
           success: true,
-          content: data.text,
-          type: 'pdf'
-        };
-      } 
-      else if (filename.match(/\.(md|markdown)$/i)) {
-        const content = await fs.readFile(filePath, 'utf8');
-        
+          files,
+        }
+      } catch (error) {
+        fastify.log.error(error)
+        reply.code(500)
+        return {
+          success: false,
+          error: 'Error getting file list',
+        }
+      }
+    },
+  )
+
+  fastify.get(
+    '/api/file/:filename',
+    async (
+      request: FastifyRequest<{ Params: FileParams }>,
+      reply: FastifyReply,
+    ): Promise<FileContentResponse> => {
+      try {
+        const { filename } = request.params
+
+        if (!FileUtils.isValidFilename(filename)) {
+          reply.code(400)
+          return {
+            success: false,
+            error: 'Invalid filename',
+          }
+        }
+
+        const filePath = FileUtils.getUploadPath(filename)
+
+        try {
+          await fs.access(filePath)
+        } catch {
+          reply.code(404)
+          return {
+            success: false,
+            error: 'File not found',
+          }
+        }
+
+        if (filename.endsWith('.pdf')) {
+          const dataBuffer = await fs.readFile(filePath)
+          const data = await pdf(dataBuffer)
+
+          return {
+            success: true,
+            content: data.text,
+            type: 'pdf',
+          }
+        } else if (filename.match(/\.(md|markdown)$/i)) {
+          const content = await fs.readFile(filePath, 'utf8')
+
+          return {
+            success: true,
+            content: content,
+            type: 'markdown',
+          }
+        } else {
+          reply.code(400)
+          return {
+            success: false,
+            error: 'Unsupported file format',
+          }
+        }
+      } catch (error) {
+        fastify.log.error(error)
+        reply.code(500)
+        return {
+          success: false,
+          error: 'Error reading file',
+        }
+      }
+    },
+  )
+
+  fastify.delete(
+    '/api/file/:filename',
+    async (
+      request: FastifyRequest<{ Params: FileParams }>,
+      reply: FastifyReply,
+    ): Promise<DeleteResponse> => {
+      try {
+        const { filename } = request.params
+
+        if (!FileUtils.isValidFilename(filename)) {
+          reply.code(400)
+          return {
+            success: false,
+            error: 'Invalid filename',
+          }
+        }
+
+        const filePath = FileUtils.getUploadPath(filename)
+
+        try {
+          await fs.access(filePath)
+        } catch {
+          reply.code(404)
+          return {
+            success: false,
+            error: 'File not found',
+          }
+        }
+
+        await fs.unlink(filePath)
+
         return {
           success: true,
-          content: content,
-          type: 'markdown'
-        };
-      }
-      else {
-        reply.code(400);
+          message: 'File deleted',
+        }
+      } catch (error) {
+        fastify.log.error(error)
+        reply.code(500)
         return {
           success: false,
-          error: 'Неподдерживаемый формат файла'
-        };
+          error: 'Error deleting file',
+        }
       }
-
-    } catch (error) {
-      fastify.log.error(error);
-      reply.code(500);
-      return {
-        success: false,
-        error: 'Ошибка при чтении файла'
-      };
-    }
-  });
-
-  fastify.delete('/api/file/:filename', async (request: FastifyRequest<{ Params: FileParams }>, reply: FastifyReply): Promise<DeleteResponse> => {
-    try {
-      const { filename } = request.params;
-      
-      if (!FileUtils.isValidFilename(filename)) {
-        reply.code(400);
-        return {
-          success: false,
-          error: 'Некорректное имя файла'
-        };
-      }
-
-      const filePath = FileUtils.getUploadPath(filename);
-
-      try {
-        await fs.access(filePath);
-      } catch {
-        reply.code(404);
-        return {
-          success: false,
-          error: 'Файл не найден'
-        };
-      }
-
-      await fs.unlink(filePath);
-
-      return {
-        success: true,
-        message: 'Файл удален'
-      };
-
-    } catch (error) {
-      fastify.log.error(error);
-      reply.code(500);
-      return {
-        success: false,
-        error: 'Ошибка при удалении файла'
-      };
-    }
-  });
+    },
+  )
 }

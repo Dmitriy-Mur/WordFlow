@@ -3,6 +3,7 @@
   <h4>RSVP reader for focus & speed</h4>
   <theme-toggle />
   <div id="app">
+    <file-uploader />
     <text-input />
     <word-flow />
     <text-navigation />
@@ -13,6 +14,7 @@
 
 <script setup lang="ts">
 import ThemeToggle from './components/ThemeToggle.vue'
+import FileUploader from './components/FileUploader.vue'
 import TextInput from './components/TextInput.vue'
 import WordFlow from './components/WordFlow.vue'
 import TextNavigation from './components/NavigationController.vue'
