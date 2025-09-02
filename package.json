@@ -36,5 +36,18 @@
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vue-tsc": "^3.0.4"
-  }
+  },
+  "description": "**Speed-read any text without moving your eyes.**   A minimalist RSVP (Rapid Serial Visual Presentation) reader built with Vue 3, TypeScript, and Pinia.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dmitriy-Mur/WordFlow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dmitriy-Mur/WordFlow/issues"
+  },
+  "homepage": "https://github.com/Dmitriy-Mur/WordFlow#readme"
 }
