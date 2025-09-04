@@ -4,8 +4,8 @@
   <theme-toggle />
   <hide-toggle />
   <div id="app">
-    <file-uploader />
-    <text-input />
+    <button @click="showImportModal = true">+</button>
+    <import-modal v-model="showImportModal" />
     <word-flow />
     <text-navigation />
     <speed-controller />
@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import ThemeToggle from './components/ThemeToggle.vue'
 import FileUploader from './components/FileUploader.vue'
 import TextInput from './components/TextInput.vue'
@@ -22,16 +23,9 @@ import TextNavigation from './components/NavigationController.vue'
 import SpeedController from './components/SpeedController.vue'
 import ChunkController from './components/ChunkController.vue'
 import HideToggle from './components/HideToggle.vue'
+import ImportModal from './components/ImportModal.vue'
 
-/*
-  <div id="app">
-    <text-input />
-    <word-flow />
-    <text-navigation />
-    <speed-controller />
-    <chunk-controller />
-  </div>
-*/
+const showImportModal = ref(false)
 </script>
 
 <style scoped lang="scss">

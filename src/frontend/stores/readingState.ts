@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useTextContentStore } from './textContent'
 
-
 const DEFAULT_CHUNK_SIZE = 3
 const MIN_CHUNK_SIZE = 1
 const MAX_CHUNK_SIZE = 20
@@ -16,11 +15,10 @@ export const useReadingStateStore = defineStore('readingState', () => {
   const nextChunkSize = ref(DEFAULT_CHUNK_SIZE)
   const intervalId = ref<number | undefined>(undefined)
 
-
-  const wordRemained = computed(() => {
+  const wordRead = computed(() => {
     const textContent = useTextContentStore()
     const readingState = useReadingStateStore()
-    return textContent.words.length - readingState.currentWordIndex - 1
+    return readingState.currentWordIndex
   })
 
   const progress = computed(() => {
@@ -63,7 +61,7 @@ export const useReadingStateStore = defineStore('readingState', () => {
     intervalId,
     // computed
     progress,
-    wordRemained,
+    wordRemained: wordRead,
     // actions
     setNextChunkSize,
     resetForNewText,
