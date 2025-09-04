@@ -2,6 +2,7 @@
   <h1>WordFlow</h1>
   <h4>RSVP reader for focus & speed</h4>
   <theme-toggle />
+  <hide-toggle />
   <div id="app">
     <file-uploader />
     <text-input />
@@ -20,6 +21,7 @@ import WordFlow from './components/WordFlow.vue'
 import TextNavigation from './components/NavigationController.vue'
 import SpeedController from './components/SpeedController.vue'
 import ChunkController from './components/ChunkController.vue'
+import HideToggle from './components/HideToggle.vue'
 
 /*
   <div id="app">

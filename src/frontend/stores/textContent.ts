@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export const useTextContentStore = defineStore('textContent', () => {
   const words = ref<string[]>([])
   const sourceText = ref('')
+
+  const getTimeToRead = () => {
+    return 1 //TODO
+  }
 
   const getCurrentChunk = (currentWordIndex: number, currentChunkSize: number) => {
     const start = currentWordIndex
