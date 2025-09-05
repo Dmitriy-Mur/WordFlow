@@ -62,7 +62,7 @@ const upload = async () => {
         }
       }
     } catch (_) {
-      // ignore parse errors; we'll handle below
+      console.log("Error")
     }
 
     if (!res.ok) {
@@ -82,7 +82,6 @@ const upload = async () => {
     }
 
     if (data && data.success && typeof data.filename === 'string') {
-      // Fastify flow: fetch the content right after upload
       const fileRes = await fetch(`/api/file/${encodeURIComponent(data.filename)}`)
       const fileCt = fileRes.headers.get('content-type') || ''
       let fileData: any = null
@@ -120,19 +119,3 @@ const upload = async () => {
   }
 }
 </script>
-
-<style scoped>
-.uploader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.error {
-  color: #c33;
-}
-.hint {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-</style>
