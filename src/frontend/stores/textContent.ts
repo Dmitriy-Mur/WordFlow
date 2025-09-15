@@ -5,8 +5,39 @@ export const useTextContentStore = defineStore('textContent', () => {
   const words = ref<string[]>([])
   const sourceText = ref('')
 
-  const getTimeToRead = () => {
-    return 1 //TODO
+  const getTimeToRead = (
+    wordsPerMinute: number,
+    currentWordIndex: number,
+    currentChunkSize: number,
+  ) => {
+    const totalWords = words.value.length
+    const safeWpm = Math.max(1, wordsPerMinute)
+    const wordsRead = Math.max(0, Math.min(currentWordIndex, totalWords))
+    const remainingWords = Math.max(0, totalWords - wordsRead)
+
+    void currentChunkSize
+
+    const minutesTotal = totalWords / safeWpm
+    const minutesSpent = wordsRead / safeWpm
+
+    const formatMinutes = (mins: number) => {
+      if (!isFinite(mins) || mins <= 0) return '0m'
+      const totalSeconds = Math.ceil(mins * 60)
+      let hours = Math.floor(totalSeconds / 3600)
+      let minutes = Math.ceil((totalSeconds % 3600) / 60)
+      if (minutes === 60) {
+        hours += 1
+        minutes = 0
+      }
+      if (hours > 0) {
+        return `${hours}h ${minutes}m`
+      }
+      return `${Math.max(1, minutes)}m`
+    }
+
+    const spentFormatted = formatMinutes(minutesSpent)
+    const totalFormatted = formatMinutes(minutesTotal)
+    return `${spentFormatted} / ${totalFormatted}`
   }
 
   const getCurrentChunk = (currentWordIndex: number, currentChunkSize: number) => {
@@ -24,6 +55,7 @@ export const useTextContentStore = defineStore('textContent', () => {
   return {
     words,
     sourceText,
+    getTimeToRead,
     getCurrentChunk,
     loadText,
   }

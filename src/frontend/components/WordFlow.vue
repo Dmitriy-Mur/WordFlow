@@ -6,25 +6,27 @@
     <div class="reader__meta">
       <span class="reader__progress">{{ progress }}%</span>
       <span class="reader__remain">{{ wordRemained }} / {{ textContent.words.length }}</span>
+      <span class="reader__time">{{ timeToRead }}</span>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useTextContentStore } from '../stores/textContent'
 import { useReadingStateStore } from '../stores/readingState'
-import { usePlaybackControlStore } from '../stores/playbackControl'
 
 const textContent = useTextContentStore()
-const readingState = useReadingStateStore()
-const playback = usePlaybackControlStore()
+const rs: any = useReadingStateStore()
 
 const currentChunk = computed(() =>
-  textContent.getCurrentChunk(readingState.currentWordIndex, readingState.currentChunkSize),
+  textContent.getCurrentChunk(rs.currentWordIndex, rs.currentChunkSize),
 )
-const progress = computed(() => readingState.progress)
-const wordRemained = computed(() => readingState.wordRemained)
+const progress = computed(() => rs.progress)
+const wordRemained = computed(() => rs.wordRemained)
+const timeToRead = computed(() =>
+  textContent.getTimeToRead(rs.wordsPerMinute, rs.currentWordIndex, rs.currentChunkSize),
+)
 </script>
 
 <style scoped lang="scss" src="../styles/components/word-flow.scss"></style>
