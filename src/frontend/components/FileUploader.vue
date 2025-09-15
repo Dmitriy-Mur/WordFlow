@@ -1,25 +1,29 @@
 <template>
   <div class="uploader">
     <input
+      ref="fileInput"
+      class="uploader__input visually-hidden"
       type="file"
       accept=".pdf,.md,.markdown,text/markdown,application/pdf,text/plain"
       @change="onFileChange"
     />
-    <button :disabled="!selectedFile || loading" @click="upload">
-      {{ loading ? 'Uploading...' : 'Upload' }}
+    <button class="ui-button" :disabled="loading" @click="pickFile">
+      <img class="ui-icon" src="/file upload.svg" alt="Upload" />
+      <span>{{ loading ? 'Uploading...' : 'Import file' }}</span>
     </button>
-    <span v-if="error" class="error">{{ error }}</span>
+    <span v-if="error" class="uploader__error">{{ error }}</span>
+    <div v-if="serverMessage" class="uploader__hint">{{ serverMessage }}</div>
   </div>
-  <div v-if="serverMessage" class="hint">{{ serverMessage }}</div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useTextContentStore } from '../stores/textContent'
 import { usePlaybackControlStore } from '../stores/playbackControl'
 import { useReadingStateStore } from '../stores/readingState'
 
 const selectedFile = ref<File | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
 const serverMessage = ref<string | null>(null)
@@ -27,12 +31,23 @@ const serverMessage = ref<string | null>(null)
 const content = useTextContentStore()
 const playback = usePlaybackControlStore()
 const readingState = useReadingStateStore()
+const closeImportModal = inject<() => void>('closeImportModal')
 
-const onFileChange = (e: Event) => {
+const pickFile = () => {
+  if (loading.value) return
+  fileInput.value?.click()
+}
+
+const onFileChange = async (e: Event) => {
   const input = e.target as HTMLInputElement
   selectedFile.value = input.files && input.files[0] ? input.files[0] : null
   error.value = null
   serverMessage.value = null
+  if (selectedFile.value) {
+    await upload()
+    if (fileInput.value) fileInput.value.value = ''
+    selectedFile.value = null
+  }
 }
 
 const upload = async () => {
@@ -62,7 +77,7 @@ const upload = async () => {
         }
       }
     } catch (_) {
-      console.log("Error")
+      console.log('Error')
     }
 
     if (!res.ok) {
@@ -78,6 +93,7 @@ const upload = async () => {
       }
       playback.restartPlayback()
       serverMessage.value = 'Text loaded from uploaded file.'
+      closeImportModal?.()
       return
     }
 
@@ -107,6 +123,7 @@ const upload = async () => {
         }
         playback.restartPlayback()
         serverMessage.value = 'Text loaded from uploaded file.'
+        closeImportModal?.()
         return
       }
     }
@@ -119,3 +136,19 @@ const upload = async () => {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.uploader {
+  display: grid;
+  gap: 10px;
+}
+.uploader__input {
+  display: none;
+}
+.uploader__error {
+  color: #ef4444;
+}
+.uploader__hint {
+  color: var(--color-muted);
+}
+</style>

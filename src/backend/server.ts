@@ -35,7 +35,7 @@ async function startServer(): Promise<void> {
 
     await server.listen({ port: PORT, host: HOST })
 
-    server.log.info(`Сервер запущен на http://${HOST}:${PORT}`)
+    server.log.info(`Server started at http://${HOST}:${PORT}`)
   } catch (error) {
     server.log.error(error)
     process.exit(1)
@@ -44,7 +44,7 @@ async function startServer(): Promise<void> {
 
 ;['SIGINT', 'SIGTERM'].forEach((signal) => {
   process.on(signal, async () => {
-    server.log.info(`Получен сигнал ${signal}, останавливаем сервер...`)
+    server.log.info(`Received ${signal} signal, stopping server...`)
     await server.close()
     process.exit(0)
   })

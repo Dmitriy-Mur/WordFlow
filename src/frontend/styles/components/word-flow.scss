@@ -1,0 +1,26 @@
+.reader {
+  display: grid;
+  gap: 10px;
+  width: min(100%, 720px);
+}
+.reader__viewport {
+  display: grid;
+  place-items: center;
+  height: clamp(160px, 28vh, 280px);
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.reader__chunk {
+  font-size: clamp(28px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.reader__meta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  color: var(--color-muted);
+  font-size: 12px;
+}

@@ -1,15 +1,111 @@
-* {
-  font-family: 'Itner', Helvetica, Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+/* Global base styles and theme tokens */
+@use './_variables.scss' as *;
+:root[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-surface: #f6f7fb;
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --color-border: #e5e7eb;
+  --color-accent: #2563eb;
+  --color-error: #ef4444;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-#app {
-  min-height: 100vh;
+:root[data-theme='dark'] {
+  --color-bg: #0b1020;
+  --color-surface: #121a2b;
+  --color-text: #e5e7eb;
+  --color-muted: #94a3b8;
+  --color-border: #23314d;
+  --color-accent: #60a5fa;
+  --color-error: #f87171;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
 
-  display: flex;
-  flex-direction: column;
+html,
+body {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family-sans;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.ui-button {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  gap: $button-gap;
+  padding: $button-padding-y $button-padding-x;
+  border-radius: $button-radius;
+  border: $border-width-1 $border-style var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.05s ease;
+}
+
+.ui-button:hover {
+  border-color: var(--color-accent);
+}
+
+.ui-button:active {
+  transform: translateY(1px);
+}
+
+.ui-button--icon {
+  width: $button-icon-size;
+  height: $button-icon-size;
+  padding: $button-padding-y;
+}
+
+.ui-icon {
+  width: $icon-size;
+  height: $icon-size;
+  pointer-events: none;
+}
+
+.container {
+  width: min(100%, $container-max);
+  margin: 0 auto;
+  padding: 0 $container-padding-x;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

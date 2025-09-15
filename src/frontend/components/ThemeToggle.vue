@@ -1,6 +1,14 @@
 <template>
-  <button @click="toggleTheme()">
-    {{ display.isDarkMode ? '☀️' : '🌙' }}
+  <button
+    class="ui-button ui-button--icon"
+    @click="toggleTheme()"
+    :aria-label="display.isDarkMode ? 'Switch to light' : 'Switch to dark'"
+  >
+    <img
+      class="ui-icon"
+      :src="display.isDarkMode ? '/sun.svg' : '/moon.svg'"
+      :alt="display.isDarkMode ? 'Light theme' : 'Dark theme'"
+    />
   </button>
 </template>
 

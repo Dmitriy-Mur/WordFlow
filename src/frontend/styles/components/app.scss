@@ -1,0 +1,82 @@
+@use '../_variables.scss' as *;
+
+.app {
+  min-height: 80vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.app__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: saturate(130%) blur(8px);
+  background: color-mix(in oklab, var(--color-bg) 84%, transparent);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app__header > .container,
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; //раскидывает по
+  gap: $spacing-4; //не вижу влияния
+  padding: 14px 16px; //отступы справа и слева
+}
+
+.app__brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.app__title {
+  font-size: $font-size-7;
+}
+
+.app__subtitle {
+  margin-top: 2px;
+  font-size: $font-size-5;
+  color: var(--color-muted);
+}
+
+.app__toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app__content {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 24px 16px 40px;
+  gap: 20px;
+}
+
+.app__controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: min(100%, 720px);
+}
+
+.app__sliders {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.app--hidden .app__controls {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .app__controls {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+
+  .app__sliders {
+    grid-template-columns: 1fr 1fr;
+  }
+}

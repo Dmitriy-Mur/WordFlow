@@ -1,0 +1,16 @@
+.chunk {
+  display: grid;
+  gap: 8px;
+}
+.chunk__label {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.chunk__input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}

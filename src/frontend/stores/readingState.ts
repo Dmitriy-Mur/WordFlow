@@ -8,7 +8,7 @@ const MAX_CHUNK_SIZE = 20
 const DEFAULT_WORDS_PER_MINUTE = 300
 
 export const useReadingStateStore = defineStore('readingState', () => {
-  const isPaused = ref(false)
+  const isPaused = ref(true)
   const wordsPerMinute = ref(DEFAULT_WORDS_PER_MINUTE)
   const currentWordIndex = ref(0)
   const currentChunkSize = ref(DEFAULT_CHUNK_SIZE)

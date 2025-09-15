@@ -1,0 +1,76 @@
+/* Spacing & Sizes */
+$spacing-1: 4px;
+$spacing-2: 8px;
+$spacing-3: 12px;
+$spacing-4: 16px;
+$spacing-5: 20px;
+$spacing-6: 24px;
+$spacing-7: 28px;
+$spacing-8: 32px;
+
+/* Border Radius */
+$radius-1: 6px;
+$radius-2: 10px;
+$radius-3: 14px;
+$radius-round: 9999px;
+
+/* Borders */
+$border-width-1: 1px;
+$border-width-2: 2px;
+$border-style: solid;
+
+/* Typography */
+$font-family-sans:
+  Inter,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  Arial,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+$font-size-1: 12px;
+$font-size-2: 14px;
+$font-size-3: 16px;
+$font-size-4: 20px;
+$font-size-5: 24px;
+$font-size-6: 32px;
+$font-size-7: 50px;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+/* Z-Index Layers */
+$z-index-base: 0;
+$z-index-sticky: 10;
+$z-index-dropdown: 1000;
+$z-index-modal: 1100;
+
+/* Shadows (match CSS custom props in themes) */
+$shadow-sm-light: 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-md-light: 0 4px 16px rgba(0, 0, 0, 0.08);
+$shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.4);
+$shadow-md-dark: 0 6px 20px rgba(0, 0, 0, 0.45);
+
+/* Container */
+$container-max: 1100px;
+$container-padding-x: 16px;
+
+/* Component tokens */
+$button-gap: 8px;
+$button-padding-y: 6px;
+$button-padding-x: 10px;
+$button-radius: 8px;
+$button-icon-size: 64px;
+$icon-size: 32px;
+
+/* Reader */
+$reader-viewport-min: 160px;
+$reader-viewport-max: 280px;
+
+/* Utilities */
+.is-hidden {
+  display: none !important;
+}
