@@ -22,31 +22,4 @@ const emit = defineEmits<{ (e: 'update:modelValue', value: boolean): void }>()
 const close = () => emit('update:modelValue', false)
 </script>
 
-<style scoped lang="scss">
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: grid;
-  place-items: center;
-  padding: 16px;
-}
-.modal__dialog {
-  position: relative;
-  width: min(100%, 680px);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  box-shadow: var(--shadow-md);
-}
-.modal__close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-}
-.modal__body {
-  padding: 24px 16px;
-  display: grid;
-  gap: 16px;
-}
-</style>
+<style scoped lang="scss" src="../styles/components/import-modal.scss"></style>

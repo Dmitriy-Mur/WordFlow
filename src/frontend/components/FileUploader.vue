@@ -137,18 +137,4 @@ const upload = async () => {
 }
 </script>
 
-<style scoped lang="scss">
-.uploader {
-  display: grid;
-  gap: 10px;
-}
-.uploader__input {
-  display: none;
-}
-.uploader__error {
-  color: #ef4444;
-}
-.uploader__hint {
-  color: var(--color-muted);
-}
-</style>
+<style scoped lang="scss" src="../styles/components/file-uploader.scss"></style>

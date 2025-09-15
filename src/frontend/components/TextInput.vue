@@ -39,8 +39,4 @@ const loadFromClipboard = async () => {
 }
 </script>
 
-<style scoped lang="scss">
-.paste {
-  display: flex;
-}
-</style>
+<style scoped lang="scss" src="../styles/components/text-input.scss"></style>

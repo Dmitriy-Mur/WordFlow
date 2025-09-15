@@ -19,9 +19,9 @@
 .app__header {
   display: flex;
   align-items: center;
-  justify-content: space-between; //раскидывает по
-  gap: $spacing-4; //не вижу влияния
-  padding: 14px 16px; //отступы справа и слева
+  justify-content: space-between;
+  gap: $spacing-4;
+  padding: 8px 16px;
 }
 
 .app__brand {
@@ -31,10 +31,12 @@
 
 .app__title {
   font-size: $font-size-7;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .app__subtitle {
-  margin-top: 2px;
+  margin-top: 0;
   font-size: $font-size-5;
   color: var(--color-muted);
 }
