@@ -5,15 +5,7 @@
       <button class="ui-button ui-button--icon" @click="increase()" aria-label="Increase speed">
         <img class="ui-icon" src="/plus.svg" alt="Increase" />
       </button>
-      <input
-        class="speed__input"
-        type="number"
-        v-model.number="wpm"
-        @change="onSet()"
-        min="50"
-        max="1000"
-        step="1"
-      />
+      <span class="speed__input">{{ wpm }}</span>
       <button class="ui-button ui-button--icon" @click="decrease()" aria-label="Decrease speed">
         <img class="ui-icon" src="/minus.svg" alt="Decrease" />
       </button>
@@ -28,15 +20,10 @@ import { useSpeedControlStore } from '../stores/speedControl'
 
 const readingState = useReadingStateStore()
 const speed = useSpeedControlStore()
-
-const wpm = computed({
-  get: () => readingState.wordsPerMinute,
-  set: (val: number) => speed.setSpeed(val),
-})
+const wpm = computed(() => (readingState as any).wordsPerMinute)
 
 const increase = () => speed.increaseReadingSpeed()
 const decrease = () => speed.decreaseReadingSpeed()
-const onSet = () => speed.setSpeed(wpm.value)
 </script>
 
 <style scoped lang="scss" src="../styles/components/speed-controller.scss"></style>

@@ -1,4 +1,3 @@
-/* Global base styles and theme tokens */
 @use './_variables.scss' as *;
 :root[data-theme='light'] {
   --color-bg: #ffffff;
