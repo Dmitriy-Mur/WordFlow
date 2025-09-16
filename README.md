@@ -3,7 +3,7 @@
 **Speed-read any text without moving your eyes.**  
 A minimalist RSVP (Rapid Serial Visual Presentation) reader built with Vue 3, TypeScript, and Pinia.
 
-![alt text](image.png)
+
 
 ## Features
 
