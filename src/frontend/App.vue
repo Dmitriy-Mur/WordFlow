@@ -21,10 +21,14 @@
     <main class="app__content">
       <word-flow />
       <nav class="app__controls">
-        <text-navigation />
-        <div class="app__sliders">
-          <speed-controller />
+        <div class="app__controls-left">
           <chunk-controller />
+        </div>
+        <div class="app__controls-center">
+          <text-navigation />
+        </div>
+        <div class="app__controls-right">
+          <speed-controller />
         </div>
       </nav>
     </main>

@@ -1,9 +1,6 @@
 <template>
   <div v-if="modelValue" class="modal" @click.self="close">
     <div class="modal__dialog">
-      <button class="modal__close ui-button ui-button--icon" @click="close" aria-label="Close">
-        <img class="ui-icon" src="/close.svg" alt="Close" />
-      </button>
       <div class="modal__body">
         <file-uploader />
         <text-input />

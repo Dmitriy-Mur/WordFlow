@@ -1,3 +1,8 @@
 .paste {
   display: flex;
+  width: 100%;
+}
+.paste .ui-button {
+  width: 100%;
+  justify-content: center;
 }

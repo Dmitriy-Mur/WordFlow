@@ -8,7 +8,6 @@
       @change="onFileChange"
     />
     <button class="ui-button" :disabled="loading" @click="pickFile">
-      <img class="ui-icon" src="/file upload.svg" alt="Upload" />
       <span>{{ loading ? 'Uploading...' : 'Import file' }}</span>
     </button>
     <span v-if="error" class="uploader__error">{{ error }}</span>

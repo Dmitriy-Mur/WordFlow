@@ -2,6 +2,10 @@
   display: grid;
   gap: 10px;
 }
+.uploader .ui-button {
+  width: 100%;
+  justify-content: center;
+}
 .uploader__input {
   display: none;
 }
@@ -10,4 +14,7 @@
 }
 .uploader__hint {
   color: var(--color-muted);
+}
+.uploader .ui-icon {
+  margin-right: 8px;
 }

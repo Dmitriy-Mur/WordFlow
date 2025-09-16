@@ -60,12 +60,19 @@
   grid-template-columns: 1fr;
   gap: 16px;
   width: min(100%, 720px);
+  align-items: center;
 }
 
-.app__sliders {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+.app__controls-left {
+  justify-self: start;
+}
+
+.app__controls-center {
+  justify-self: center;
+}
+
+.app__controls-right {
+  justify-self: end;
 }
 
 .app--hidden .app__controls {
@@ -74,11 +81,6 @@
 
 @media (min-width: 640px) {
   .app__controls {
-    grid-template-columns: auto 1fr;
-    align-items: center;
-  }
-
-  .app__sliders {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
