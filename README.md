@@ -4,7 +4,7 @@
 A minimalist RSVP (Rapid Serial Visual Presentation) reader built with Vue 3, TypeScript, and Pinia.
 
 
-![Screenschot]([image.png](https://github.com/Dmitriy-Mur/WordFlow/blob/main/image.png?raw=true))
+![Screenschot]([image.png]
 
 ## Features
 
